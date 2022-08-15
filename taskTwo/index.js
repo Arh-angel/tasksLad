@@ -1,8 +1,5 @@
 let formElement = document.forms.formElement;
 
-const oneInput = formElement.one;
-const twoInput = formElement.two;
-
 formElement.onfocus = function(evt) {
   let activeElement = formElement.querySelector('.focused');
 
@@ -20,8 +17,7 @@ formElement.onblur = function(evt) {
   }
 };
 
-oneInput.addEventListener("focus", (e) => formElement.onfocus(e));
-oneInput.addEventListener("blur", (e) => formElement.onfocus(e));
-
-twoInput.addEventListener("focus", (e) => formElement.onfocus(e));
-twoInput.addEventListener("blur", (e) => formElement.onfocus(e));
+for(let i = 0; i < formElement.length; i++) {
+  formElement.elements[i].addEventListener("focus", (e) => formElement.onfocus(e));
+  formElement.elements[i].addEventListener("blur", (e) => formElement.onfocus(e));
+}
