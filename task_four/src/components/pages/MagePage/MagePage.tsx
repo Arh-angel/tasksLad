@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Dialog from "../../common/Dialog/Dialog";
+import React, { useEffect, useState } from 'react';
+import Dialog from '../../common/Dialog/Dialog';
 
 import style from './MagePage.module.scss';
 
@@ -22,7 +22,7 @@ const MagePage = (props:MagePagePropsTypes) => {
     <div className={style.container}>
       {text ? <Dialog hero="mage" text={text} /> : ''}
     </div>
-  )
-}
+  );
+};
 
 export default MagePage;

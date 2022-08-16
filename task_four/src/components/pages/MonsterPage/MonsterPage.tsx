@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Dialog from "../../common/Dialog/Dialog";
+import React, { useEffect, useState } from 'react';
+import Dialog from '../../common/Dialog/Dialog';
 
 import style from './MonsterPage.module.scss';
 
@@ -22,7 +22,7 @@ const MonsterPage = (props:MonsterPagePropsTypes) => {
     <div className={style.container}>
       {text ? <Dialog hero="monster" text={text} /> : ''}
     </div>
-  )
-}
+  );
+};
 
 export default MonsterPage;

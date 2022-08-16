@@ -7,7 +7,7 @@ export const monsterPhrase = {
     'Было слишком просто!',
     'Не ожидал!'
   ]
-}
+};
 
 export const magePhrase = {
   initial: [
@@ -18,4 +18,4 @@ export const magePhrase = {
     'Больше по Мытищам не буду гулять, странное место!',
     'Скажу всем что против 3 монстров сражался!'
   ]
-}
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 import style from './Dialog.module.scss';
 
@@ -8,19 +8,19 @@ type DialogPropsTypes = {
 };
 
 const Dialog = (props: DialogPropsTypes) => {
-  const {hero, text} = props;
+  const { hero, text } = props;
 
   const [currentHero, setCurrentHero] = useState('');
 
   useEffect(() => {
     setCurrentHero(hero);
   }, [hero]);
-  
+
   return (
     <div className={style.container}>
       <p className={hero === 'monster' ? style.scale : ''}>{text}</p>
     </div>
-  )
-}
+  );
+};
 
 export default Dialog;
