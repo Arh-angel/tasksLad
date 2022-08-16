@@ -45,7 +45,6 @@ export const { addMaxHealth, addName } = mageSlice.actions;
 export const selectMaxHealth = (state: RootState) => state.mage.currentMage.maxHealth;
 export const selectNameMage = (state: RootState) => state.mage.currentMage.name;
 export const selectMoves = (state: RootState) => state.mage.currentMage.moves;
-export const selectInitialPhrase = (state: RootState) => state.mage.phrase.initial;
-export const selectFinalPhrase = (state: RootState) => state.mage.phrase.final;
+export const selectPhrase = (state: RootState) => state.mage.phrase;
 
 export default mageSlice.reducer;

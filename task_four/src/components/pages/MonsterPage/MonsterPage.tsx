@@ -14,8 +14,6 @@ const MonsterPage = (props:MonsterPagePropsTypes) => {
 
   useEffect(() => {
     setText(dialogText);
-
-    setTimeout(() => setText(''), 2000);
   }, [dialogText]);
 
   return (

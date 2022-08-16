@@ -14,8 +14,6 @@ const MagePage = (props:MagePagePropsTypes) => {
 
   useEffect(() => {
     setText(dialogText);
-
-    setTimeout(() => setText(''), 2000);
   }, [dialogText]);
 
   return (

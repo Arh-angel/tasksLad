@@ -40,10 +40,10 @@ export const monsterSlice = createSlice({
 
 // export const { addName } = monsterSlice.actions;
 
-export const selectNameMage = (state: RootState) => state.monster.currentMonster.name;
+export const selectNameMonster = (state: RootState) => state.monster.currentMonster.name;
 export const selectMaxHealth = (state: RootState) => state.monster.currentMonster.maxHealth;
 export const selectMoves = (state: RootState) => state.monster.currentMonster.moves;
-export const selectInitialPhrase = (state: RootState) => state.monster.phrase.initial;
-export const selectFinalPhrase = (state: RootState) => state.monster.phrase.final;
+export const selectPhrase = (state: RootState) => state.monster.phrase;
+export const selectCurrentMonster = (state: RootState) => state.monster.currentMonster;
 
 export default monsterSlice.reducer;
