@@ -1,11 +1,16 @@
-import logo from "./logo.svg";
-import style from "./App.module.scss";
-import BattelefieldContainer from "./containers/BattelefieldContainer";
+import React from 'react';
+import BattelefieldContainer from './containers/BattelefieldContainer';
+import AppContext from './context/AppContext';
 
-const App = () => {
-  return (
+import { monsterPhrase, magePhrase } from './helpers/dialog';
+import { monster, mage } from './helpers/heroes';
+
+const state:{} = { monsterPhrase, magePhrase, monster, mage };
+
+const App = () => (
+  <AppContext.Provider value={state}>
     <BattelefieldContainer />
-  );
-}
+  </AppContext.Provider>
+);
 
 export default App;

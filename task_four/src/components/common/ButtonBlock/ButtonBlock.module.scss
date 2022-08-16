@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  & > .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: rgba(0, 128, 0, 0.452);
+    font-weight: 600;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background-color: rgb(8, 161, 8);
+    }
+  }
+}

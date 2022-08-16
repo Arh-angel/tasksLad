@@ -1,0 +1,17 @@
+.container {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 200px;
+  background: url(../../../assets/images/dialog.png) no-repeat;
+  background-size: 100% 100%;
+  margin-bottom: 50px;
+}
+
+.scale {
+  transform: scale(-1, 1);
+}

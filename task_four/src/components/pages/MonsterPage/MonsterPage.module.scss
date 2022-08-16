@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 200px;
+  background: url(../../../assets/images/monster.png) no-repeat;
+  background-size: 100% 100%;
+  transform: scale(-1, 1);
+  margin-bottom: 50px;
+}
