@@ -18,7 +18,7 @@ const Dialog = (props: DialogPropsTypes) => {
 
   return (
     <div className={style.container}>
-      <p className={hero === 'monster' ? style.scale : ''}>{text}</p>
+      <p className={currentHero === 'monster' ? style.scale : ''}>{text}</p>
     </div>
   );
 };

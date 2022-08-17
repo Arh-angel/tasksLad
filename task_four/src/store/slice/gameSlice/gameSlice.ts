@@ -8,7 +8,9 @@ export interface GameState {
   mageDefeated:boolean,
   monsterDefeated:boolean,
   mageMove: boolean,
-  monsterMove: boolean
+  monsterMove: boolean,
+  flagStartMove: boolean,
+  showDialog: boolean
 }
 
 const initialState: GameState = {
@@ -18,7 +20,9 @@ const initialState: GameState = {
   mageDefeated: false,
   monsterDefeated: false,
   mageMove: true,
-  monsterMove: false
+  monsterMove: false,
+  flagStartMove: false,
+  showDialog: true
 };
 
 export const gameSlice = createSlice({
@@ -45,16 +49,26 @@ export const gameSlice = createSlice({
     },
     changeMonsterMove: (state, action: PayloadAction<boolean>) => {
       state.monsterMove = action.payload;
+    },
+    changeFlagStartMove: (state, action: PayloadAction<boolean>) => {
+      state.flagStartMove = action.payload;
+    },
+    changeShowDialog: (state, action: PayloadAction<boolean>) => {
+      state.showDialog = action.payload;
     }
   }
 });
 
-export const { changeStart, changeMageDefeated, changeMonsterDefeated, changeMageMove, changeMonsterMove } = gameSlice.actions;
+export const { changeStart, changeMageDefeated, changeMonsterDefeated, changeMageMove, changeMonsterMove, changeFlagStartMove, changeVictoriesMonster, changeVictoriesMage, changeShowDialog } = gameSlice.actions;
 
 export const selectStart = (state: RootState) => state.game.start;
 export const selectMonsterDefeated = (state: RootState) => state.game.monsterDefeated;
 export const selectMageDefeated = (state: RootState) => state.game.mageDefeated;
 export const selectMageMove = (state: RootState) => state.game.mageMove;
 export const selectMonsterMove = (state: RootState) => state.game.monsterMove;
+export const selectFlagStartMove = (state: RootState) => state.game.flagStartMove;
+export const selectVictoriesMonster = (state: RootState) => state.game.victoriesMonster;
+export const selectVictoriesMage = (state: RootState) => state.game.victoriesMage;
+export const selectShowDialog = (state: RootState) => state.game.showDialog;
 
 export default gameSlice.reducer;

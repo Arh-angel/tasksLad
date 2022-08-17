@@ -1,15 +1,16 @@
 .container {
   position: absolute;
   top: -50%;
-  left: -200%;
+  left: -350%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 500px;
   height: 200px;
   background: url(../../../assets/images/dialog.png) no-repeat;
   background-size: 100% 100%;
   margin-bottom: 50px;
+  font-weight: 600;
 }
 
 .scale {

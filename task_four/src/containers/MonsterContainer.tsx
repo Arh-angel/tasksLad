@@ -1,32 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MonsterPage from '../components/pages/MonsterPage/MonsterPage';
-import { useAppSelector } from '../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/storeHooks';
 import { IHero } from '../models/IHero';
-import { IMove } from '../models/IMove';
 import { IPhrase } from '../models/IPhrase';
-import { selectMageMove, selectMonsterDefeated, selectStart } from '../store/slice/gameSlice/gameSlice';
-import { selectCurrentMonster, selectNameMonster, selectPhrase } from '../store/slice/monsterSlice/monsterSlice';
+import { changeFlagStartMove, changeMageMove, changeMonsterMove, selectFlagStartMove, selectMageMove, selectMonsterDefeated, selectMonsterMove, selectShowDialog, selectStart } from '../store/slice/gameSlice/gameSlice';
+import { addMove, selectCurrentMonster, selectMonsterMoveCurrent, selectPhrase } from '../store/slice/monsterSlice/monsterSlice';
 
 const MonsterContainer = () => {
-  const [currentMonster, setCurrentMonster] = useState<IHero>();
+  const [currentMonster, setCurrentMonster] = useState<IHero>({
+    maxHealth: 0,
+    name: '',
+    moves: []
+  });
   const [currentMonsterPhrase, setCurrentMonsterPhrase] = useState<IPhrase>({ initial: [], final: [] });
   const [monsterSay, setMonsterSay] = useState('');
-  const [monsterMove, setMonsterMove] = useState<IMove>();
   const [cooldownList, setCooldownList] = useState<any>({});
 
-  const monster = useAppSelector(selectCurrentMonster);
+  const monster:IHero = useAppSelector(selectCurrentMonster);
   const monsterPhrase = useAppSelector(selectPhrase);
   const statusGame = useAppSelector(selectStart);
   const monsterDefeated = useAppSelector(selectMonsterDefeated);
   const mageMove = useAppSelector(selectMageMove);
+  const currentMove = useAppSelector(selectMonsterMoveCurrent);
+  const flagStartMove = useAppSelector(selectFlagStartMove);
+  const showDialog = useAppSelector(selectShowDialog);
+
+  const dispatch = useAppDispatch();
 
   const createMove = () => {
     const randomNum = Math.floor(Math.random() * (3 - 0)) + 0;
-    const move = currentMonster?.moves[randomNum];
+    const move = currentMonster.moves[randomNum];
 
-    return move;
+    const nameMove:any = move?.name;
+
+    if (move!.cooldown > 0) {
+      if (cooldownList.nameMove) {
+        createMove();
+      } else {
+        setCooldownList({
+          ...cooldownList,
+          [nameMove]: move!.cooldown
+        });
+      }
+    }
+
+    dispatch(addMove(move));
+    dispatch(changeMonsterMove(true));
   };
+
+  useEffect(() => {
+    if (flagStartMove && mageMove) {
+      createMove();
+    }
+  }, [flagStartMove, mageMove]);
 
   useEffect(() => {
     setCurrentMonster(monster);
@@ -37,17 +64,20 @@ const MonsterContainer = () => {
   }, [monsterPhrase]);
 
   useEffect(() => {
-    if (!monsterDefeated) {
+    if (!monsterDefeated && showDialog) {
       currentMonsterPhrase.initial.forEach((element, index) => {
         if (index === 0) {
           setTimeout(() => setMonsterSay(element), 3000);
           setTimeout(() => setMonsterSay(''), 6000);
         } else {
           setTimeout(() => setMonsterSay(element), 9000);
-          setTimeout(() => setMonsterSay(''), 12000);
+          setTimeout(() => {
+            setMonsterSay('');
+            dispatch(changeFlagStartMove(true));
+          }, 12000);
         }
       });
-    } else {
+    } else if (monsterDefeated && showDialog) {
       currentMonsterPhrase.final.forEach((element, index) => {
         if (index === 0) {
           setMonsterSay(element);
@@ -58,26 +88,16 @@ const MonsterContainer = () => {
         }
       });
     }
-  }, [statusGame, monsterDefeated]);
+  }, [statusGame, monsterDefeated, showDialog]);
 
   useEffect(() => {
-    let move = createMove();
-    const nameMove:any = move?.name;
-
-    if (cooldownList.find(move)) {
-      move = createMove();
+    if (flagStartMove && currentMove && statusGame !== false) {
+      dispatch(changeMageMove(false));
+      setMonsterSay(`Я использую - ${currentMove.name}`);
+    } else {
+      setMonsterSay('');
     }
-
-    if (mageMove) {
-      setMonsterMove(move);
-      if (move!.cooldown > 0) {
-        setCooldownList({
-          ...cooldownList,
-          [nameMove]: move!.cooldown
-        });
-      }
-    }
-  }, [mageMove]);
+  }, [flagStartMove, currentMove, statusGame]);
 
   return (
     <MonsterPage dialogText={monsterSay} />
