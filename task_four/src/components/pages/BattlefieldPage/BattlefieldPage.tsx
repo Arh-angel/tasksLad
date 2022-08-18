@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import MageContainer from '../../../containers/MageContainer';
 import MonsterContainer from '../../../containers/MonsterContainer';
-import { useAppSelector } from '../../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
 import { selectStart, selectVictoriesMage, selectVictoriesMonster } from '../../../store/slice/gameSlice/gameSlice';
+import { addMaxHealth } from '../../../store/slice/mageSlice/mageSlice';
+import { addMaxHealthMonster } from '../../../store/slice/monsterSlice/monsterSlice';
 import ButtonBlock from '../../common/ButtonBlock';
 import ModalWindow from '../../common/ModalWindow';
 import SelectLevel from '../../common/SelectLevel';
@@ -16,8 +18,12 @@ const BattelefieldPage = () => {
   const victoriesMage = useAppSelector(selectVictoriesMage);
   const statusGame = useAppSelector(selectStart);
 
+  const dispatch = useAppDispatch();
+
   const handlerModalWindowOpen = () => {
     setModalWindowOpen(!modalWindowOpen);
+    dispatch(addMaxHealth(10));
+    dispatch(addMaxHealthMonster(10));
   };
 
   useEffect(() => {

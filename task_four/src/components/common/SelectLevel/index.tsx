@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react';
-import { useAppDispatch } from '../../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
+import { selectStart } from '../../../store/slice/gameSlice/gameSlice';
 import { addMaxHealth } from '../../../store/slice/mageSlice/mageSlice';
 
 import style from './SelectLevel.module.scss';
 
 const SelectLevel = () => {
+  const statusGame = useAppSelector(selectStart);
   const dispatch = useAppDispatch();
 
   const handlerDifficultBtn = () => {
@@ -21,9 +24,11 @@ const SelectLevel = () => {
 
   return (
     <div className={style.container}>
-      <button className={style.btn} type="button" onClick={handlerSimpleBtn}>Простой</button>
-      <button className={style.btn} type="button" onClick={handlerMiddleBtn}>Средний</button>
-      <button className={style.btn} type="button" onClick={handlerDifficultBtn}>Сложный</button>
+      {!statusGame ? <>
+        <button className={style.btn} type="button" onClick={handlerSimpleBtn}>Простой</button>
+        <button className={style.btn} type="button" onClick={handlerMiddleBtn}>Средний</button>
+        <button className={style.btn} type="button" onClick={handlerDifficultBtn}>Сложный</button>
+                     </> : ''}
     </div>
   );
 };

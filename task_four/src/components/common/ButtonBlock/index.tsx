@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
-import { changeMageMove, changeMonsterMove, changeShowDialog, changeStart, selectStart } from '../../../store/slice/gameSlice/gameSlice';
+import { changeMageMove, changeMonsterMove, changeShowDialog, changeStart, selectFlagStartMove, selectMageDefeated, selectStart } from '../../../store/slice/gameSlice/gameSlice';
 import { addMove, selectMoves, selectMageMove } from '../../../store/slice/mageSlice/mageSlice';
 
 import style from './ButtonBlock.module.scss';
@@ -15,10 +15,18 @@ const ButtonBlock = () => {
   const statusGame = useAppSelector(selectStart);
   const mageMoves = useAppSelector(selectMoves);
   const currentMove = useAppSelector(selectMageMove);
+  const flagStartMove = useAppSelector(selectFlagStartMove);
+  const mageDefeated = useAppSelector(selectMageDefeated);
 
   useEffect(() => {
     setStartGame(statusGame);
   }, [statusGame]);
+
+  useEffect(() => {
+    if (!flagStartMove) {
+      setCooldownList({});
+    }
+  }, [flagStartMove]);
 
   const handlerStatusStart = () => {
     dispatch(changeStart(true));
@@ -35,8 +43,6 @@ const ButtonBlock = () => {
       return upgradList;
     });
 
-    console.log(upgradList);
-
     if (value === 0) {
       setCooldownList({
         ...upgradList
@@ -47,7 +53,6 @@ const ButtonBlock = () => {
       dispatch(changeMageMove(true));
     } else if (value === 1) {
       if (cooldownList.one > 0) {
-        console.log('this is upgrade');
         setCooldownList({
           ...cooldownList,
           one: cooldownList.one - 1
@@ -94,11 +99,9 @@ const ButtonBlock = () => {
     }
   };
 
-  console.log(cooldownList);
-
   return (
     <div className={style.container}>
-      {startGame
+      {flagStartMove && !mageDefeated
         ? <>
           <button className={style.btn} type="button" onClick={() => handlerMove(0)}>Удар боевым кадилом</button>
           {!cooldownList.one ? <button className={style.btn} type="button" onClick={() => handlerMove(1)}>Вертушка левой пяткой</button> : ''}
@@ -107,7 +110,7 @@ const ButtonBlock = () => {
       {!startGame
         ? <button className={[style.btn, style.btn_start].join(' ')} type="button" onClick={handlerStatusStart}>Играть!</button>
         : ''}
-      {startGame
+      {flagStartMove && !mageDefeated
         ? <>
           {!cooldownList.two ? <button className={style.btn} type="button" onClick={() => handlerMove(2)}>Каноничный фаербол</button> : ''}
           {!cooldownList.free ? <button className={style.btn} type="button" onClick={() => handlerMove(3)}>Магический блок</button> : ''}

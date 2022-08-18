@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import BattelefieldPage from '../components/pages/BattlefieldPage/BattlefieldPage';
 import { useAppDispatch, useAppSelector } from '../hooks/storeHooks';
-import { changeMageDefeated, changeMageMove, changeMonsterDefeated, changeStart, changeVictoriesMage, changeVictoriesMonster } from '../store/slice/gameSlice/gameSlice';
+import { changeFlagStartMove, changeMageDefeated, changeMageMove, changeMonsterDefeated, changeStart, changeVictoriesMage, changeVictoriesMonster } from '../store/slice/gameSlice/gameSlice';
 import { addMaxHealth, selectMageMove, selectMaxHealth } from '../store/slice/mageSlice/mageSlice';
 import { addMaxHealthMonster, selectMonsterMoveCurrent, selectMaxHealthMonster } from '../store/slice/monsterSlice/monsterSlice';
 
@@ -41,11 +41,13 @@ const BattelefieldContainer = () => {
     if (maxHealthMage < 1) {
       dispatch(changeMageDefeated(true));
       dispatch(changeVictoriesMonster());
+      dispatch(addMaxHealth(0));
     }
 
     if (maxHealthMonster < 1) {
       dispatch(changeMonsterDefeated(true));
       dispatch(changeVictoriesMage());
+      dispatch(addMaxHealthMonster(0));
     }
   }, [maxHealthMage, maxHealthMonster]);
 
